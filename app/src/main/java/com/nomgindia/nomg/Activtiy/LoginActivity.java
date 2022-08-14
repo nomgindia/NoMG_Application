@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmailSignIn,etPasswordSignIn;
     Button btnLogin,btnGoToSignUp;
     TextView tvForgotPassword;
-//    ProgressBar spin_kit_login;
+    ProgressBar spin_kit_login;
     private String APIKey;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -46,11 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         btnGoToSignUp=findViewById(R.id.btnGoToSignUp);
         btnLogin=findViewById(R.id.btnLogin);
         tvForgotPassword=findViewById(R.id.tvForgotPassword);
-//        spin_kit_login=findViewById(R.id.spin_kit_login);
-//
-//
-//        ChasingDots chasingDots = new ChasingDots();
-//        spin_kit_login.setIndeterminateDrawable(chasingDots);
+        spin_kit_login=findViewById(R.id.spin_kit_login);
+        ChasingDots chasingDots = new ChasingDots();
+        spin_kit_login.setIndeterminateDrawable(chasingDots);
 
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
@@ -60,26 +58,20 @@ public class LoginActivity extends AppCompatActivity {
         if(APIkey!=null){
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
-
-
-//        btnGoToSignUp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(LoginActivity.this,SignUpActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
-
+        btnGoToSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,SignUpActivity.class);
+                startActivity(i);
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                spin_kit_login.setVisibility(View.VISIBLE);
+                spin_kit_login.setVisibility(View.VISIBLE);
                 String email= etEmailSignIn.getText().toString().trim();
                 String password = etPasswordSignIn.getText().toString().trim();
-
-
                 loginUser(email,password);
 
             }
@@ -93,18 +85,13 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
-                Log.d("responseForLogin",response);
-
-
                 APIKey =null;
                 try
                 {
                     APIKey= response;
                     if(APIKey.equals(null))
                     {
-//                        spin_kit_login.setVisibility(View.GONE);
+                        spin_kit_login.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this,"Enter the details properly!",Toast.LENGTH_SHORT).show();
                         etEmailSignIn.setError("Your phone number or password is wrong, please enter the correct credentials!");
                         etEmailSignIn.requestFocus();
@@ -112,14 +99,11 @@ public class LoginActivity extends AppCompatActivity {
                         etPasswordSignIn.requestFocus();
 
                     }
-
-                    else
-                    {
+                    else {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(KEY_APIKEY,APIKey);
                         editor.apply();
-//                        spin_kit_login.setVisibility(View.GONE);
-
+                        spin_kit_login.setVisibility(View.GONE);
                         Intent i = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(i);
                     }
@@ -127,10 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }
-
-
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -138,8 +118,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("errorFound", error.toString());
             }
         }) {
-
-
             @Override
             protected Map<String, String> getParams()  {
                 Map<String, String> params = new HashMap<String, String>();
@@ -148,10 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 return params;
 
             }
-
-
         };
-
         requestQueue.add(stringRequest);
     }
 }

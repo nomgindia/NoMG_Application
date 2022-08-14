@@ -116,6 +116,7 @@
                     android:hint="@string/password"
                     android:inputType="textPassword" />
 
+
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -164,8 +165,23 @@
                 android:textColor="@color/textPrimaryGreen"
                 app:backgroundTint="@null" />
 
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit_login"
+                style="@style/SpinKitView.Large.Circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="300dp"
+                android:layout_marginEnd="175dp"
+                android:visibility="gone"
+                app:SpinKit_Color="@color/textPrimaryGreen" />
+
+
         </RelativeLayout>
     </ScrollView>
+
 
 
 
